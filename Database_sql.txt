@@ -1,0 +1,36 @@
+CREATE DATABASE faculty_db;
+USE faculty_db;
+
+CREATE TABLE faculty (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    mobile VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE course (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    duration VARCHAR(50) NOT NULL  -- Example: "6 weeks" or "30 days"
+);
+
+CREATE TABLE faculty_course (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    faculty_id BIGINT NOT NULL,
+    course_id BIGINT NOT NULL,
+    FOREIGN KEY (faculty_id) REFERENCES faculty(id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
+);
+
+INSERT INTO faculty (name, email, password, mobile) VALUES 
+('Alice Johnson', 'alice@example.com', 'pass123', '9876543210'),
+('Bob Smith', 'bob@example.com', 'securepass', '9123456780');
+
+INSERT INTO course (name, duration) VALUES 
+('Java Spring Boot', '6 weeks'),
+('Database Management', '4 weeks');
+
+INSERT INTO faculty_course (faculty_id, course_id) VALUES 
+(1, 1),  -- Alice -> Java Spring Boot
+(2, 2);  -- Bob -> Database Management
